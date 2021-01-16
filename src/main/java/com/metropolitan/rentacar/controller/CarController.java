@@ -178,7 +178,7 @@ public class CarController {
         newCar.setId(car.getId());
         carService.save(newCar);
 
-        return "redirect:/cars/viewCar/" + id;
+        return "redirect:/cars/inventory";
     }
 
     @GetMapping("/deleteCar/{id}")

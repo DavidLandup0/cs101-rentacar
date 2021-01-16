@@ -17,6 +17,7 @@
     <p><strong>Broj dozvole:</strong> <span th:text="${rentalEvent.customer.licenceNo}"></span></p>
     <p><strong>Izdato od:</strong> <span th:text="${#dates.format(rentalEvent.rentedOn, 'dd-MMM-yyyy')}"></span></p>
     <p><strong>Izdato do:</strong> <span th:text="${#dates.format(rentalEvent.rentedTo, 'dd-MMM-yyyy')}"></span></p>
+    <p><strong>Za naplatu:</strong> <span th:text="${'€' + #numbers.formatInteger(rentalEvent.totalPrice, 0, 'POINT')}"></span></p>
     <p><strong>Vozilo slobodno za: </strong><span th:text="${freeAfter}"></span> dana</p>
 
     <p th:if="${extraCharge} != null">Vozilo je prekoracilo datum vracanja. Za dodatnu naplatu: <span
