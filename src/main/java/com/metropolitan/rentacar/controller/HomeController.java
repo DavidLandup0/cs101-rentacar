@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
@@ -25,14 +26,7 @@ public class HomeController {
     private UserService userService;
 
     @RequestMapping("/")
-    public String home(Model model, Principal principal) {
-
-        List<Car> carList = carService.findAll();
-
-
-        model.addAttribute("carList", carList);
-
+    public String home() {
         return "home";
     }
-
 }

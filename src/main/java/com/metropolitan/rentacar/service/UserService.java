@@ -1,6 +1,8 @@
 package com.metropolitan.rentacar.service;
 
+import com.metropolitan.rentacar.domain.Authority;
 import com.metropolitan.rentacar.domain.User;
+import com.metropolitan.rentacar.domain.enums.AuthoritiesConstants;
 import com.metropolitan.rentacar.repository.AuthorityRepository;
 import com.metropolitan.rentacar.repository.UserRepository;
 import com.metropolitan.rentacar.security.DomainUserDetailsService;
@@ -47,5 +49,23 @@ public class UserService {
     public Optional<User> findById(String id) {
         log.debug("Request to find user by id {}", id);
         return userRepository.findById(id);
+    }
+
+
+    public User registerUser(User user, String password) {
+        userRepository.findOneByEmailIgnoreCase(user.getEmail()).ifPresent(existingUser -> {
+                throw new EmailAlreadyUsedException();
+        });
+        User newUser = new User();
+
+        newUser.setPassword(passwordEncoder.encode(password));
+        newUser.setEmail(user.getEmail());
+
+        Set<Authority> authorities = new HashSet<>();
+        authorityRepository.findById(AuthoritiesConstants.ADMIN).ifPresent(authorities::add);
+        newUser.setAuthorities(authorities);
+        userRepository.save(newUser);
+        log.debug("Created Information for User: {}", newUser);
+        return newUser;
     }
 }

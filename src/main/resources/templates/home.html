@@ -6,12 +6,12 @@
 </head>
 <body>
     <h1>Dobrodosli!</h1>
-    <h2>Slobodna vozila:</h2>
-    <div>
-        <div th:each="car : ${carList}">
-            <h3 th:text="${car.model}"></h3>
-            <p>Cena: <span th:text="${car.price}"></span></p>
-        </div>
-    </div>
+    <form th:action="@{/}" method="post">
+        <label for="email">Email</label>:
+        <input type="text" id="email" name="email" autofocus="autofocus" /><br/>
+        <label for="password">Lozinka</label>:
+        <input type="password" id="password" name="password"/><br/>
+        <input type="submit" value="Log in"/>
+    </form>
 </body>
 </html>
