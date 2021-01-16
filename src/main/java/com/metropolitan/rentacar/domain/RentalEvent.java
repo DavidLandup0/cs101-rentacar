@@ -15,4 +15,55 @@ public class RentalEvent {
 
     @Field("total_price")
     private int totalPrice;
+
+    public RentalEvent(){}
+
+    public RentalEvent(Customer customer, Car car, int lengthOfRent, int totalPrice) {
+        this.customer = customer;
+        this.car = car;
+        this.lengthOfRent = lengthOfRent;
+        this.totalPrice = totalPrice;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
+    }
+
+    public int getLengthOfRent() {
+        return lengthOfRent;
+    }
+
+    public void setLengthOfRent(int lengthOfRent) {
+        this.lengthOfRent = lengthOfRent;
+    }
+
+    public int getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(int totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    @Override
+    public String toString() {
+        return "RentalEvent{" +
+                "customer=" + customer +
+                ", car=" + car +
+                ", lengthOfRent=" + lengthOfRent +
+                ", totalPrice=" + totalPrice +
+                '}';
+    }
 }

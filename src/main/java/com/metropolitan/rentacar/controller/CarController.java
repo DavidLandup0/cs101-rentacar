@@ -1,6 +1,8 @@
 package com.metropolitan.rentacar.controller;
 
 import com.metropolitan.rentacar.domain.Car;
+import com.metropolitan.rentacar.domain.Customer;
+import com.metropolitan.rentacar.domain.RentalEvent;
 import com.metropolitan.rentacar.domain.User;
 import com.metropolitan.rentacar.service.CarService;
 import com.metropolitan.rentacar.service.UserService;
@@ -62,6 +64,23 @@ public class CarController {
         return "redirect:/cars/viewCar/" + car.getId();
     }
 
+    @GetMapping("/rentCar/{id}")
+    public String rentCar(@PathVariable("id") String id, @ModelAttribute RentalEvent rentalEvent) {
+        Optional<Car> car = carService.findOne(id);
+        if (!car.isPresent()) {
+            return "404";
+        }
+        rentalEvent.setCar(car.get());
+        rentalEventService.save(rentalEvent);
+
+        return "redirect:/cars/inventory";
+    }
+
+    @PostMapping("/rentCar/{id}")
+    public String rentCarPost() {
+
+    }
+
     @GetMapping("/editCar/{id}")
     public String editCar(@PathVariable("id") String id, Model model) {
         Optional<Car> car = carService.findOne(id);
@@ -85,7 +104,7 @@ public class CarController {
         return "redirect:/cars/viewCar/" + id;
     }
 
-    @PostMapping("/deleteCar/{id}")
+    @GetMapping("/deleteCar/{id}")
     public String deleteCar(@PathVariable("id") String id) {
         Optional<Car> car = carService.findOne(id);
         if(!car.isPresent()) {
