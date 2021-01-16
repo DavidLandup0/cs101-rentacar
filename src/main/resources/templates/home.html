@@ -1,0 +1,17 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Dobrodosli!</h1>
+    <h2>Slobodna vozila:</h2>
+    <div>
+        <div th:each="car : ${carList}">
+            <h3 th:text="${car.model}"></h3>
+            <p>Cena: <span th:text="${car.price}"></span></p>
+        </div>
+    </div>
+</body>
+</html>
