@@ -37,6 +37,9 @@
             <th>Model</th>
             <th>Izdato od</th>
             <th>Izdato do</th>
+            <th>Vraceno</th>
+            <th>Musterija</th>
+            <th>Vozacka Dozvola</th>
             <th>Naplaceno</th>
         </tr>
         </thead>
@@ -50,6 +53,15 @@
             </td>
             <td class="text-center">
                 <span th:text="${#dates.format(rentalEvent.rentedTo, 'dd-MMM-yyyy')}"></span>
+            </td>
+            <td class="text-center">
+                <span th:text="${#dates.format(rentalEvent.returnDate, 'dd-MMM-yyyy')}"></span>
+            </td>
+            <td class="text-center">
+                <span th:text="${rentalEvent.customer.name}"></span>
+            </td>
+            <td class="text-center">
+                <span th:text="${rentalEvent.customer.licenceNo}"></span>
             </td>
             <td class="text-center">
                 <span th:text="${'€' + #numbers.formatInteger(rentalEvent.charged, 0, 'POINT')}"></span>

@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-<h1>Dobrodosli!</h1>
+<h1>Dobrodosli! | <a th:href="@{/logout}">Odjavi se</a></h1>
 <h2 th:if="${not #lists.isEmpty(availableCarList)}">Slobodna vozila:</h2>
 <div>
     <div th:each="car : ${availableCarList}">

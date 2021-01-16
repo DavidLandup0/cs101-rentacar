@@ -221,9 +221,9 @@ public class CarController {
 
         List<RentalEvent> rentalEventList = rentalEventService.findAll();
         PrintWriter writer = response.getWriter();
-        writer.write("Model, Izdato od, Izdato do, Naplaceno \n");
+        writer.write("Model, Izdato od, Izdato do, Vraceno, Musterija, Naplaceno \n");
         for (RentalEvent re : rentalEventList) {
-            writer.write(re.getCar().getModel() + "," + re.getRentedOn() + "," + re.getRentedTo() + "," + re.getCharged() + "\n");
+            writer.write(re.getCar().getModel() + "," + re.getRentedOn() + "," + re.getRentedTo() + "," + re.getReturnDate() + "," + re.getCustomer().getName() + "," + re.getCharged() + "\n");
         }
     }
 
