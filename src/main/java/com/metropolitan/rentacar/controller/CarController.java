@@ -11,15 +11,20 @@ import com.metropolitan.rentacar.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 @Controller
 @RequestMapping("/cars/")
@@ -95,7 +100,7 @@ public class CarController {
         carService.save(car.get());
 
         rentalEvent.setCar(car.get());
-        rentalEvent.setRentedTo(rentalEvent.getRentedOn().plus(rentalEvent.getLengthOfRent(), ChronoUnit.DAYS));
+        rentalEvent.setRentedTo(rentalEvent.getRentedOn().plus(rentalEvent.getLengthOfRent(), DAYS));
         rentalEvent.setTotalPrice(rentalEvent.getLengthOfRent()*rentalEvent.getCar().getPrice());
         customerService.save(rentalEvent.getCustomer());
         rentalEventService.save(rentalEvent);
@@ -111,20 +116,44 @@ public class CarController {
         }
 
         model.addAttribute("rentalEvent", rentalEventOptional.get());
-        model.addAttribute("freeAfter", rentalEventOptional.get().getRentedOn().until(rentalEventOptional.get().getRentedTo(), ChronoUnit.DAYS));
+        model.addAttribute("freeAfter", Instant.now().until(rentalEventOptional.get().getRentedTo(), DAYS));
 
         return "viewRental";
     }
 
     @GetMapping("/endRental/{id}")
     public String endRental(@PathVariable("id") String id, Model model) {
-        
-
+        Optional<RentalEvent> rentalEventOptional = rentalEventService.findOne(id);
+        if(!rentalEventOptional.isPresent()) {
+            return "404";
+        }
+        RentalEvent rentalEvent = rentalEventOptional.get();
+        if(Instant.now().isAfter(rentalEventOptional.get().getRentedTo())) {
+            model.addAttribute("extraCharge", DAYS.between(rentalEvent.getRentedTo(), Instant.now())*rentalEvent.getCar().getPrice());
+        }
+        model.addAttribute("rentalEvent", rentalEventOptional.get());
         return "endRental";
     }
 
     @PostMapping("/endRental/{id}")
-    public String endRentalPost() {
+    public String endRentalPost(@PathVariable("id") String id) {
+        Optional<RentalEvent> rentalEventOptional = rentalEventService.findOne(id);
+        if(!rentalEventOptional.isPresent()) {
+            return "404";
+        }
+        RentalEvent rentalEventOld = rentalEventOptional.get();
+        rentalEventOld.getCar().setAvailable(true);
+        rentalEventOld.setReturnDate(Instant.now());
+        if (rentalEventOld.getReturnDate().isAfter(rentalEventOld.getRentedTo())) {
+            rentalEventOld.setCharged(rentalEventOld.getTotalPrice() + (int) Math.abs(DAYS.between(rentalEventOld.getReturnDate(), rentalEventOld.getRentedTo())*rentalEventOld.getCar().getPrice()));
+        } else {
+            rentalEventOld.setCharged(rentalEventOld.getTotalPrice());
+        }
+        rentalEventOld.setActive(false);
+
+        carService.save(rentalEventOld.getCar());
+        rentalEventService.save(rentalEventOld);
+
         return "redirect:/cars/inventory";
     }
 
@@ -159,6 +188,16 @@ public class CarController {
         }
         carService.delete(id);
         return "redirect:/cars/inventory";
+    }
+
+    @GetMapping("/report")
+    public String report( @RequestParam(value = "startDate", required = false) @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate startDate,
+                          @RequestParam(value = "endDate", required =  false) @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate endDate,
+                          Model model) {
+        List<RentalEvent> rentalEventList = rentalEventService.findByReturnDateBetween(startDate, endDate);
+
+        model.addAttribute("rentalEventList", rentalEventList);
+        return "report";
     }
 
 

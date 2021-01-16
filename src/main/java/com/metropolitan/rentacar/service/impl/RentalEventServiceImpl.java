@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,5 +49,11 @@ public class RentalEventServiceImpl implements RentalEventService {
     public void delete(String id) {
         log.debug("Request to delete rental event with id : {}", id);
         rentalEventRepository.deleteById(id);
+    }
+
+    @Override
+    public List<RentalEvent> findByReturnDateBetween(LocalDate startDate, LocalDate endDate) {
+        log.debug("Request to find all rental events for dates");
+        return rentalEventRepository.findByReturnDateBetween(startDate, endDate);
     }
 }

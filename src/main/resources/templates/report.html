@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type='text/javascript' src='//code.jquery.com/jquery-2.0.2.js'></script>
+    <script type="text/javascript" src="//code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+</head>
+<body>
+
+<div class="col-md-12">
+    <div class="input-group">
+        <form onsubmit="'window.location.href= \'' + '?startDate=\' + startDate.value + '&endDate=\' + endDate.value">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Raspon datuma</span>
+            </div>
+            <div class="col-md-4">
+                <input autocomplete="off" name="startDate" placeholder="Početni datum" class="form-control start-date">
+            </div>
+            <div class="col-md-4">
+                <input autocomplete="off" name="endDate" placeholder="Krajnji datum" class="form-control end-date">
+            </div>
+            <div class="col-md-4">
+                <button class="btn btn-primary" type="submit">Primeni</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="intro-y overflow-auto lg:overflow-visible mt-8 sm:mt-0">
+    <table class="table table-report sm:mt-2">
+        <thead>
+        <tr>
+            <th>Model</th>
+            <th>Izdato od</th>
+            <th>Izdato do</th>
+            <th>Naplaceno</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="rentalEvent : ${rentalEventList}">
+            <td>
+                <span th:text="${rentalEvent.car.model}"></span>
+            </td>
+            <td class="text-center">
+                          <span th:text="${#dates.format(rentalEvent.rentedOn, 'dd-MMM-yyyy')}"></span>
+            </td>
+            <td class="text-center">
+                <span th:text="${#dates.format(rentalEvent.rentedTo, 'dd-MMM-yyyy')}"></span>
+            </td>
+            <td class="text-center">
+                <span th:text="${'€' + #numbers.formatInteger(rentalEvent.charged, 0, 'POINT')}"></span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+</body>
+<link th:href="@{/css/datepicker.css}" rel="stylesheet">
+<script th:src="@{/js/datepicker.js}"></script>
+
+<script>
+    $(function() {
+      var $startDate = $('.start-date');
+      var $endDate = $('.end-date');
+
+      $startDate.datepicker({
+        autoHide: true,
+        format: 'dd-MM-yyyy'
+      });
+      $endDate.datepicker({
+        autoHide: true,
+        format: 'dd-MM-yyyy',
+        startDate: $startDate.datepicker('getDate'),
+      });
+
+      $startDate.on('change', function () {
+        $endDate.datepicker('setStartDate', $startDate.datepicker('getDate'));
+      });
+    });
+
+</script>
+</html>

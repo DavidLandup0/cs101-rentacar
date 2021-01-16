@@ -13,6 +13,8 @@
     <p><strong>Izdato do:</strong> <span th:text="${#dates.format(rentalEvent.rentedTo, 'dd-MMM-yyyy')}"></span></p>
     <p><strong>Vozilo slobodno za: </strong><span th:text="${freeAfter}"></span> dana</p>
 
+    <p th:if="${extraCharge} != null">Vozilo je prekoracilo datum vracanja. Za dodatnu naplatu: <span th:text="${extraCharge}"></span></p>
+
     <a th:href="@{/cars/inventory}">Inventar</a>
     <a th:href="@{/cars/endRental/{id}(id = ${rentalEvent.id})}">Razduzi vozilo</a>
 </body>

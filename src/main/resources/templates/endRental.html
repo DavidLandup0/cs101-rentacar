@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Razduzi vozilo</h2>
+
+<form th:action="@{/cars/endRental/{id}(id = ${rentalEvent.id})}" method="post" th:object="${rentalEvent}" accept-charset="UTF-8">
+    <div>
+        <h3>Razduzi kola</h3>
+        <div>
+            <div>
+                <h5>Molimo potvrdite razduzenje:</h5>
+                <div>
+                    <select th:field="*{active}" name="cars" id="cars">
+                        <option th:value="true" disabled>-</option>
+                        <option th:value="false">Razduzen</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <input type="submit" value="Razduzi">
+    </div>
+</form>
+</body>
+</html>

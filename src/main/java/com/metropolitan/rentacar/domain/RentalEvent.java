@@ -28,12 +28,18 @@ public class RentalEvent {
     @Field("rented_to")
     private Instant rentedTo;
 
+    @Field("return_date")
+    private Instant returnDate;
+
+    @Field("charged")
+    private int charged;
+
     @Field("active")
     private boolean active;
 
     public RentalEvent(){}
 
-    public RentalEvent(String id, Customer customer, Car car, int lengthOfRent, int totalPrice, Instant rentedOn, Instant rentedTo, boolean active) {
+    public RentalEvent(String id, Customer customer, Car car, int lengthOfRent, int totalPrice, Instant rentedOn, Instant rentedTo, Instant returnDate, int charged, boolean active) {
         this.id = id;
         this.customer = customer;
         this.car = car;
@@ -41,6 +47,8 @@ public class RentalEvent {
         this.totalPrice = totalPrice;
         this.rentedOn = rentedOn;
         this.rentedTo = rentedTo;
+        this.returnDate = returnDate;
+        this.charged = charged;
         this.active = active;
     }
 
@@ -108,6 +116,22 @@ public class RentalEvent {
         this.rentedTo = rentedTo;
     }
 
+    public Instant getReturnDate() {
+        return returnDate;
+    }
+
+    public void setReturnDate(Instant returnDate) {
+        this.returnDate = returnDate;
+    }
+
+    public int getCharged() {
+        return charged;
+    }
+
+    public void setCharged(int charged) {
+        this.charged = charged;
+    }
+
     @Override
     public String toString() {
         return "RentalEvent{" +
@@ -118,6 +142,8 @@ public class RentalEvent {
                 ", totalPrice=" + totalPrice +
                 ", rentedOn=" + rentedOn +
                 ", rentedTo=" + rentedTo +
+                ", returnDate=" + returnDate +
+                ", charged=" + charged +
                 ", active=" + active +
                 '}';
     }
