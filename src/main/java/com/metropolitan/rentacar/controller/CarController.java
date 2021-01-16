@@ -96,6 +96,7 @@ public class CarController {
 
     @PostMapping("/rentCar/{id}")
     public String rentCarPost(@PathVariable("id") String id, @ModelAttribute RentalEvent rentalEvent) {
+        rentalEvent.setId(null);
         Optional<Car> car = carService.findOne(id);
         if (!car.isPresent()) {
             return "404";

@@ -16,20 +16,23 @@
     <div class="col-md-12">
         <div class="input-group">
             <form onsubmit="'window.location.href= \'' + '?startDate=\' + startDate.value + '&endDate=\' + endDate.value">
-                <div class="input-group-prepend">
-                    <span>Raspon datuma</span>
-                </div>
-                <div class="col-md-4">
-                    <input autocomplete="off" name="startDate" placeholder="Početni datum" class="form-control start-date">
-                </div>
-                <div class="col-md-4">
-                    <input autocomplete="off" name="endDate" placeholder="Krajnji datum" class="form-control end-date">
-                </div>
-                <div class="col-md-4">
-                    <button class="btn btn-primary" type="submit">Primeni</button>
+                <div class="row">
+                    <div class="input-group-prepend">
+                        <h3>Raspon datuma</h3>
+                    </div>
+                    <div class="col-md-4">
+                        <input autocomplete="off" name="startDate" placeholder="Početni datum" class="form-control start-date">
+                    </div>
+                    <div class="col-md-4">
+                        <input autocomplete="off" name="endDate" placeholder="Krajnji datum" class="form-control end-date">
+                    </div>
+                    <div class="col-md-4">
+                        <button class="btn btn-primary" type="submit">Primeni</button>
+                        <a class="btn btn-primary" th:href="@{/cars/export-csv}">Export</a>
+                    </div>
                 </div>
             </form>
-            <a class="btn btn-primary" th:href="@{/cars/export-csv}">Export</a>
+
         </div>
     </div>
 
