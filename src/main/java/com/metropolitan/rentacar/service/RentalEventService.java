@@ -9,6 +9,7 @@ public interface RentalEventService {
     RentalEvent save(RentalEvent rentalEvent);
 
     List<RentalEvent> findAll();
+    List<RentalEvent> findByActiveTrue();
 
     Optional<RentalEvent> findOne(String id);
 

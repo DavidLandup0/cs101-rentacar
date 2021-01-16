@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+    <h1>Informacije o izdatom vozilu</h1>
+    <h2 th:text="${rentalEvent.car.model}"></h2>
+    <p><strong>Musterija:</strong> <span th:text="${rentalEvent.customer.name}"></span></p>
+    <p><strong>Broj dozvole:</strong> <span th:text="${rentalEvent.customer.licenceNo}"></span></p>
+    <p><strong>Izdato od:</strong> <span th:text="${#dates.format(rentalEvent.rentedOn, 'dd-MMM-yyyy')}"></span></p>
+    <p><strong>Izdato do:</strong> <span th:text="${#dates.format(rentalEvent.rentedTo, 'dd-MMM-yyyy')}"></span></p>
+    <p><strong>Vozilo slobodno za: </strong><span th:text="${freeAfter}"></span> dana</p>
 
+    <a th:href="@{/cars/inventory}">Inventar</a>
+    <a th:href="@{/cars/endRental/{id}(id = ${rentalEvent.id})}">Razduzi vozilo</a>
 </body>
 </html>

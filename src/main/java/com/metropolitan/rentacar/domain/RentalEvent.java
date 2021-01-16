@@ -1,10 +1,14 @@
 package com.metropolitan.rentacar.domain;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.Instant;
 
 public class RentalEvent {
+
+    @Id
+    private String id;
 
     @Field("customer")
     private Customer customer;
@@ -24,15 +28,20 @@ public class RentalEvent {
     @Field("rented_to")
     private Instant rentedTo;
 
+    @Field("active")
+    private boolean active;
+
     public RentalEvent(){}
 
-    public RentalEvent(Customer customer, Car car, int lengthOfRent, int totalPrice, Instant rentedOn, Instant rentedTo) {
+    public RentalEvent(String id, Customer customer, Car car, int lengthOfRent, int totalPrice, Instant rentedOn, Instant rentedTo, boolean active) {
+        this.id = id;
         this.customer = customer;
         this.car = car;
         this.lengthOfRent = lengthOfRent;
         this.totalPrice = totalPrice;
         this.rentedOn = rentedOn;
         this.rentedTo = rentedTo;
+        this.active = active;
     }
 
     public Customer getCustomer() {
@@ -53,6 +62,22 @@ public class RentalEvent {
 
     public int getLengthOfRent() {
         return lengthOfRent;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void setLengthOfRent(int lengthOfRent) {
@@ -86,12 +111,14 @@ public class RentalEvent {
     @Override
     public String toString() {
         return "RentalEvent{" +
-                "customer=" + customer +
+                "id='" + id + '\'' +
+                ", customer=" + customer +
                 ", car=" + car +
                 ", lengthOfRent=" + lengthOfRent +
                 ", totalPrice=" + totalPrice +
                 ", rentedOn=" + rentedOn +
                 ", rentedTo=" + rentedTo +
+                ", active=" + active +
                 '}';
     }
 }

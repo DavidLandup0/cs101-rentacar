@@ -33,6 +33,12 @@ public class RentalEventServiceImpl implements RentalEventService {
     }
 
     @Override
+    public List<RentalEvent> findByActiveTrue() {
+        log.debug("Request to find all active rentals");
+        return rentalEventRepository.findByActiveTrue();
+    }
+
+    @Override
     public Optional<RentalEvent> findOne(String id) {
         log.debug("Request to find rental event with id : {}", id);
         return rentalEventRepository.findById(id);

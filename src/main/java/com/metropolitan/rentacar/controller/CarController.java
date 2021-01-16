@@ -43,7 +43,7 @@ public class CarController {
     @GetMapping("/inventory")
     public String inventory(Model model) {
         List<Car> availableCarList = carService.findByAvailableTrue();
-        List<RentalEvent> activeRentals = rentalEventService.findAll();
+        List<RentalEvent> activeRentals = rentalEventService.findByActiveTrue();
         model.addAttribute("availableCarList", availableCarList);
         model.addAttribute("activeRentals", activeRentals);
         return "inventory";
@@ -100,6 +100,31 @@ public class CarController {
         customerService.save(rentalEvent.getCustomer());
         rentalEventService.save(rentalEvent);
 
+        return "redirect:/cars/inventory";
+    }
+
+    @GetMapping("/viewRental/{id}")
+    public String viewRental(@PathVariable("id") String id, Model model) {
+        Optional<RentalEvent> rentalEventOptional = rentalEventService.findOne(id);
+        if(!rentalEventOptional.isPresent()) {
+            return "404";
+        }
+
+        model.addAttribute("rentalEvent", rentalEventOptional.get());
+        model.addAttribute("freeAfter", rentalEventOptional.get().getRentedOn().until(rentalEventOptional.get().getRentedTo(), ChronoUnit.DAYS));
+
+        return "viewRental";
+    }
+
+    @GetMapping("/endRental/{id}")
+    public String endRental(@PathVariable("id") String id, Model model) {
+        
+
+        return "endRental";
+    }
+
+    @PostMapping("/endRental/{id}")
+    public String endRentalPost() {
         return "redirect:/cars/inventory";
     }
 

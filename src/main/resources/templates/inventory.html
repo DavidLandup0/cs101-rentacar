@@ -26,7 +26,7 @@
         <p>Ukupna cena: <span th:text="${rentalEvent.totalPrice} + 'e'"></span></p>
         <p>Izdato od: <span th:text="${#dates.format(rentalEvent.rentedOn, 'dd-MMM-yyyy')}"></span></p>
         <p>Izdato do: <span th:text="${#dates.format(rentalEvent.rentedTo, 'dd-MMM-yyyy')}"></span></p>
-        <a th:href="@{/cars/viewRental}">Pogledaj</a>
+        <a th:href="@{/cars/viewRental/{id}(id = ${rentalEvent.id})}">Pogledaj</a>
     </div>
     <hr>
 </div>
