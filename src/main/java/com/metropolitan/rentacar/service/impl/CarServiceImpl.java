@@ -33,6 +33,18 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
+    public List<Car> findByAvailableTrue() {
+        log.debug("Request to find all available cars");
+        return carRepository.findByAvailableTrue();
+    }
+
+    @Override
+    public List<Car> findByAvailableFalse() {
+        log.debug("Request to find all nonavailable cars");
+        return carRepository.findByAvailableFalse();
+    }
+
+    @Override
     public Optional<Car> findOne(String id) {
         log.debug("Request to find car with id : {}", id);
         return carRepository.findById(id);

@@ -21,29 +21,24 @@ public class Car implements Serializable {
     @Field("age")
     private int age;
 
+    @Field("price")
+    private int price;
+
     @Field("car_color")
     private CAR_COLOR car_color;
 
     @Field("available")
     private boolean available;
 
-    @Field("customer")
-    @DBRef
-    private Customer customer;
-
-    @Field("length_of_rent")
-    private int lengthOfRent;
-
     public Car() {}
 
-    public Car(String id, String model, int age, CAR_COLOR car_color, boolean available, Customer customer, int lengthOfRent) {
+    public Car(String id, String model, int age, CAR_COLOR car_color, boolean available, int price) {
         this.id = id;
         this.model = model;
         this.age = age;
         this.car_color = car_color;
         this.available = available;
-        this.customer = customer;
-        this.lengthOfRent = lengthOfRent;
+        this.price = price;
     }
 
     public String getId() {
@@ -86,19 +81,11 @@ public class Car implements Serializable {
         this.available = available;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public int getPrice() {
+        return price;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    public int getLengthOfRent() {
-        return lengthOfRent;
-    }
-
-    public void setLengthOfRent(int lengthOfRent) {
-        this.lengthOfRent = lengthOfRent;
+    public void setPrice(int price) {
+        this.price = price;
     }
 }

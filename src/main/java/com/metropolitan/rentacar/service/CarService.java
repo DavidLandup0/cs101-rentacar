@@ -26,6 +26,15 @@ public interface CarService {
     List<Car> findAll();
 
     /**
+     * Find all available list.
+     *
+     * @return the list
+     */
+    List<Car> findByAvailableTrue();
+
+    List<Car> findByAvailableFalse();
+
+    /**
      * Find one optional.
      *
      * @param id the id

@@ -21,10 +21,6 @@ public class Customer implements Serializable {
     @Field("licenceNo")
     private String licenceNo;
 
-    @DBRef
-    @Field("car")
-    private Car car;
-
 
     public Customer() {}
 
@@ -32,7 +28,6 @@ public class Customer implements Serializable {
         this.id = id;
         this.name = name;
         this.licenceNo = licenceNo;
-        this.car = car;
     }
 
     public static long getSerialVersionUID() {
@@ -63,21 +58,12 @@ public class Customer implements Serializable {
         this.licenceNo = licenceNo;
     }
 
-    public Car getCar() {
-        return car;
-    }
-
-    public void setCar(Car car) {
-        this.car = car;
-    }
-
     @Override
     public String toString() {
         return "Customer{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", licenceNo='" + licenceNo + '\'' +
-                ", car=" + car +
                 '}';
     }
 }

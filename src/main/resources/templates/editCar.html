@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Dodaj nova kola</h2>
+
+<form th:action="@{/cars/editCar/{id}(id = ${car.id})}" method="post" th:object="${car}" accept-charset="UTF-8">
+    <div>
+        <h3>Osnovne Informacije</h3>
+        <div>
+            <div>
+                <h5>Model kola</h5>
+                <input th:field="*{model}" placeholder="Ime modela..." type="text" value=""/>
+            </div>
+
+            <div>
+                <h5>Boja Kola</h5>
+                <select th:field="*{car_color}">
+                    <option th:value="WHITE">Bela</option>
+                    <option th:value="BLACK">Crna</option>
+                    <option th:value="RED">Crvena</option>
+                </select>
+            </div>
+
+
+            <div>
+                <h5>Cena po danu</h5>
+                <div>
+                    <input th:field="*{price}" type="text" placeholder="0" data-unit="e">
+                </div>
+            </div>
+
+            <div>
+                <h5>Starost automobila</h5>
+                <div>
+                    <input th:field="*{age}" type="text" placeholder="0" data-unit="godina">
+                </div>
+            </div>
+
+            <div>
+                <h5>Dostupnost automobila</h5>
+                <div>
+                    <select th:field="*{available}" name="cars" id="cars">
+                        <option th:value="true">Slobodno</option>
+                        <option th:value="false">Zauzeto</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <input type="submit" value="Azuriraj Oglas">
+    </div>
+    <div class="row">
+        <input type="submit" value="Obrisi Oglas">
+    </div>
+</form>
+</body>
+</html>

@@ -52,7 +52,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .loginPage("/")
                 .loginProcessingUrl("/")
                 .usernameParameter("email")
-                .defaultSuccessUrl("/cars/")
+                .defaultSuccessUrl("/cars/inventory")
                 .failureUrl("/")
                 .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/")
                 .and()

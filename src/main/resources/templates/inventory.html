@@ -6,12 +6,28 @@
 </head>
 <body>
 <h1>Dobrodosli!</h1>
-<h2>Slobodna vozila:</h2>
+<h2 th:if="${not #lists.isEmpty(availableCarList)}">Slobodna vozila:</h2>
 <div>
-    <div th:each="car : ${carList}">
+    <div th:each="car : ${availableCarList}">
+     <hr>
         <h3 th:text="${car.model}"></h3>
         <p>Cena: <span th:text="${car.price}"></span></p>
+        <a th:href="@{/cars/editCar/{id}(id = ${car.id})}">Izmeni</a>
+        <a th:href="@{/cars/rentCar/{id}(id = ${car.id})}">Rent</a>
     </div>
+    <hr>
 </div>
+<h2 th:if="${not #lists.isEmpty(unavailableCarList)}">Zauzeta vozila:</h2>
+<div>
+    <div th:each="car : ${unavailableCarList}">
+        <hr>
+        <h3 th:text="${car.model}"></h3>
+        <p>Cena: <span th:text="${car.price}"></span></p>
+        <a th:href="@{/cars/editCar}">Izmeni</a>
+        <a th:href="@{/cars/rentCar}">Rent</a>
+    </div>
+    <hr>
+</div>
+<a th:href="@{/cars/addCar}"><i class="sl sl-icon-action-redo"></i> Azuriraj kola </a>
 </body>
 </html>
