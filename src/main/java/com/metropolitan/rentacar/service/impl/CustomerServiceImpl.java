@@ -5,10 +5,12 @@ import com.metropolitan.rentacar.repository.CustomerRepository;
 import com.metropolitan.rentacar.service.CustomerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class CustomerServiceImpl implements CustomerService {
 
     private final Logger log = LoggerFactory.getLogger(CustomerServiceImpl.class);

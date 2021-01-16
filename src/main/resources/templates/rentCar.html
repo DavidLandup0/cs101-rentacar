@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Dodaj nova kola</h2>
+
+<form th:action="@{/cars/rentCar/{id}(id = ${car.id})}" method="post" th:object="${rentalEvent}" accept-charset="UTF-8">
+    <div>
+        <h3>Osnovne Informacije</h3>
+        <div>
+            <div>
+                <h5>Ime musterije</h5>
+                <input th:field="*{customer.name}" placeholder="Ime musterije..." type="text" value=""/>
+            </div>
+            <div>
+                <h5>Broj vozacke dozvole musterije:</h5>
+                <input th:field="*{customer.licenceNo}" placeholder="Br. dozvole..." type="text" value=""/>
+            </div>
+
+            <div>
+                <h5>Broj dana na izdavanje:</h5>
+                <div>
+                    <input th:field="*{lengthOfRent}" type="text" placeholder="0" data-unit="e">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <input type="submit" value="Izdaj kola">
+    </div>
+</form>
+</body>
+</html>

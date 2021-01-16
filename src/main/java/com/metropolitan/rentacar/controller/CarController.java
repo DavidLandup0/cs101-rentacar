@@ -5,6 +5,8 @@ import com.metropolitan.rentacar.domain.Customer;
 import com.metropolitan.rentacar.domain.RentalEvent;
 import com.metropolitan.rentacar.domain.User;
 import com.metropolitan.rentacar.service.CarService;
+import com.metropolitan.rentacar.service.CustomerService;
+import com.metropolitan.rentacar.service.RentalEventService;
 import com.metropolitan.rentacar.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,13 +33,19 @@ public class CarController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private RentalEventService rentalEventService;
+
+    @Autowired
+    private CustomerService customerService;
+
 
     @GetMapping("/inventory")
     public String inventory(Model model) {
         List<Car> availableCarList = carService.findByAvailableTrue();
-        List<Car> unavailableCarList = carService.findByAvailableFalse();
+        List<RentalEvent> activeRentals = rentalEventService.findAll();
         model.addAttribute("availableCarList", availableCarList);
-        model.addAttribute("unavailableCarList", unavailableCarList);
+        model.addAttribute("activeRentals", activeRentals);
         return "inventory";
     }
 
@@ -65,20 +74,33 @@ public class CarController {
     }
 
     @GetMapping("/rentCar/{id}")
-    public String rentCar(@PathVariable("id") String id, @ModelAttribute RentalEvent rentalEvent) {
+    public String rentCar(@PathVariable("id") String id, Model model) {
         Optional<Car> car = carService.findOne(id);
         if (!car.isPresent()) {
             return "404";
         }
-        rentalEvent.setCar(car.get());
-        rentalEventService.save(rentalEvent);
 
-        return "redirect:/cars/inventory";
+        model.addAttribute("car", car.get());
+        model.addAttribute("rentalEvent", new RentalEvent());
+        return "rentCar";
     }
 
     @PostMapping("/rentCar/{id}")
-    public String rentCarPost() {
+    public String rentCarPost(@PathVariable("id") String id, @ModelAttribute RentalEvent rentalEvent) {
+        Optional<Car> car = carService.findOne(id);
+        if (!car.isPresent()) {
+            return "404";
+        }
+        car.get().setAvailable(false);
+        carService.save(car.get());
 
+        rentalEvent.setCar(car.get());
+        rentalEvent.setRentedTo(rentalEvent.getRentedOn().plus(rentalEvent.getLengthOfRent(), ChronoUnit.DAYS));
+        rentalEvent.setTotalPrice(rentalEvent.getLengthOfRent()*rentalEvent.getCar().getPrice());
+        customerService.save(rentalEvent.getCustomer());
+        rentalEventService.save(rentalEvent);
+
+        return "redirect:/cars/inventory";
     }
 
     @GetMapping("/editCar/{id}")

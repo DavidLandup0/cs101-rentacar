@@ -8,5 +8,6 @@
 <h1 th:text="${car.model}"></h1>
 <h2 th:text="'Cena: ' + ${car.price} + 'e po danu'"></h2>
 <h2 th:text="${'Boja automobila: ' + car.car_color.label}"></h2>
+<a th:href="@{/cars/inventory}">Inventar</a>
 </body>
 </html>

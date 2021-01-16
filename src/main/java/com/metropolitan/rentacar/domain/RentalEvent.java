@@ -2,6 +2,8 @@ package com.metropolitan.rentacar.domain;
 
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.time.Instant;
+
 public class RentalEvent {
 
     @Field("customer")
@@ -16,13 +18,21 @@ public class RentalEvent {
     @Field("total_price")
     private int totalPrice;
 
+    @Field("rented_on")
+    private Instant rentedOn = Instant.now();
+
+    @Field("rented_to")
+    private Instant rentedTo;
+
     public RentalEvent(){}
 
-    public RentalEvent(Customer customer, Car car, int lengthOfRent, int totalPrice) {
+    public RentalEvent(Customer customer, Car car, int lengthOfRent, int totalPrice, Instant rentedOn, Instant rentedTo) {
         this.customer = customer;
         this.car = car;
         this.lengthOfRent = lengthOfRent;
         this.totalPrice = totalPrice;
+        this.rentedOn = rentedOn;
+        this.rentedTo = rentedTo;
     }
 
     public Customer getCustomer() {
@@ -57,6 +67,22 @@ public class RentalEvent {
         this.totalPrice = totalPrice;
     }
 
+    public Instant getRentedOn() {
+        return rentedOn;
+    }
+
+    public void setRentedOn(Instant rentedOn) {
+        this.rentedOn = rentedOn;
+    }
+
+    public Instant getRentedTo() {
+        return rentedTo;
+    }
+
+    public void setRentedTo(Instant rentedTo) {
+        this.rentedTo = rentedTo;
+    }
+
     @Override
     public String toString() {
         return "RentalEvent{" +
@@ -64,6 +90,8 @@ public class RentalEvent {
                 ", car=" + car +
                 ", lengthOfRent=" + lengthOfRent +
                 ", totalPrice=" + totalPrice +
+                ", rentedOn=" + rentedOn +
+                ", rentedTo=" + rentedTo +
                 '}';
     }
 }
