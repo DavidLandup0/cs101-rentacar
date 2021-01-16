@@ -23,11 +23,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private DomainUserDetailsService domainUserDetailsService;
 
-    private final CorsFilter corsFilter;
-
-    public SecurityConfiguration(DomainUserDetailsService domainUserDetailsService, CorsFilter corsFilter) {
+    public SecurityConfiguration(DomainUserDetailsService domainUserDetailsService) {
         this.domainUserDetailsService = domainUserDetailsService;
-        this.corsFilter = corsFilter;
     }
 
     @Bean
@@ -37,11 +34,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        // @formatter:off
         http
                 .csrf()
                 .disable()
-                .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling()
                 .and()
                 .sessionManagement()
