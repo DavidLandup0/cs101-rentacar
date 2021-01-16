@@ -12,14 +12,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
@@ -102,6 +106,7 @@ public class CarController {
         rentalEvent.setCar(car.get());
         rentalEvent.setRentedTo(rentalEvent.getRentedOn().plus(rentalEvent.getLengthOfRent(), DAYS));
         rentalEvent.setTotalPrice(rentalEvent.getLengthOfRent()*rentalEvent.getCar().getPrice());
+        rentalEvent.setActive(true);
         customerService.save(rentalEvent.getCustomer());
         rentalEventService.save(rentalEvent);
 
@@ -194,10 +199,32 @@ public class CarController {
     public String report( @RequestParam(value = "startDate", required = false) @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate startDate,
                           @RequestParam(value = "endDate", required =  false) @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate endDate,
                           Model model) {
+        if(startDate == null) {
+            startDate = Instant.now().minus(30, DAYS).atZone(ZoneId.of("Europe/London")).toLocalDate();
+        }
+        if(endDate == null) {
+            endDate = Instant.now().atZone(ZoneId.of("Europe/London")).toLocalDate();
+        }
         List<RentalEvent> rentalEventList = rentalEventService.findByReturnDateBetween(startDate, endDate);
 
         model.addAttribute("rentalEventList", rentalEventList);
         return "report";
+    }
+
+
+    @GetMapping("/export-csv")
+    public void exportCSV(HttpServletResponse response) throws IOException {
+        final String filename = "izvestaj.csv";
+        response.setContentType("text/csv");
+        response.setHeader(HttpHeaders.CONTENT_DISPOSITION,
+                "attachment; filename=\"" + filename + "\"");
+
+        List<RentalEvent> rentalEventList = rentalEventService.findAll();
+        PrintWriter writer = response.getWriter();
+        writer.write("Model, Izdato od, Izdato do, Naplaceno \n");
+        for (RentalEvent re : rentalEventList) {
+            writer.write(re.getCar().getModel() + "," + re.getRentedOn() + "," + re.getRentedTo() + "," + re.getCharged() + "\n");
+        }
     }
 
 
