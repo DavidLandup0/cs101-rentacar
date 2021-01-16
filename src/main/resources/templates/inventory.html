@@ -2,35 +2,45 @@
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Inventar</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+            crossorigin="anonymous"></script>
 </head>
 <body>
-<h1>Dobrodosli! | <a th:href="@{/logout}">Odjavi se</a></h1>
-<h2 th:if="${not #lists.isEmpty(availableCarList)}">Slobodna vozila:</h2>
-<div>
-    <div th:each="car : ${availableCarList}">
-     <hr>
-        <h3 th:text="${car.model}"></h3>
-        <p>Cena: <span th:text="${car.price}"></span></p>
-        <a th:href="@{/cars/editCar/{id}(id = ${car.id})}">Izmeni</a>
-        <a th:href="@{/cars/rentCar/{id}(id = ${car.id})}">Rent</a>
-    </div>
-    <hr>
-</div>
-<h2 th:if="${not #lists.isEmpty(activeRentals)}">Zauzeta vozila:</h2>
-<div>
-    <div th:each="rentalEvent : ${activeRentals}">
+<div class="container">
+    <h1>Dobrodosli! | <a th:href="@{/logout}">Odjavi se</a></h1>
+    <h2 th:if="${not #lists.isEmpty(availableCarList)}">Slobodna vozila:</h2>
+    <div class="row">
+        <div th:each="car : ${availableCarList}">
+            <hr>
+            <h3 th:text="${car.model}"></h3>
+            <p><strong>Cena:</strong> <span th:text="${car.price}"></span></p>
+            <p><strong>Starost:</strong> <span th:text="${car.age}"></span></p>
+            <a class="btn btn-outline-primary" th:href="@{/cars/editCar/{id}(id = ${car.id})}">Izmeni</a>
+            <a class="btn btn-outline-primary" th:href="@{/cars/rentCar/{id}(id = ${car.id})}">Rent</a>
+        </div>
+        <br>
         <hr>
-        <h3 th:text="${rentalEvent.car.model}"></h3>
-        <p>Cena po danu: <span th:text="${rentalEvent.car.price} + 'e'"></span></p>
-        <p>Ukupna cena: <span th:text="${rentalEvent.totalPrice} + 'e'"></span></p>
-        <p>Izdato od: <span th:text="${#dates.format(rentalEvent.rentedOn, 'dd-MMM-yyyy')}"></span></p>
-        <p>Izdato do: <span th:text="${#dates.format(rentalEvent.rentedTo, 'dd-MMM-yyyy')}"></span></p>
-        <a th:href="@{/cars/viewRental/{id}(id = ${rentalEvent.id})}">Pogledaj</a>
     </div>
-    <hr>
+    <h2 th:if="${not #lists.isEmpty(activeRentals)}">Zauzeta vozila:</h2>
+    <div class="row">
+        <div th:each="rentalEvent : ${activeRentals}">
+            <hr>
+            <h3 th:text="${rentalEvent.car.model}"></h3>
+            <p><strong>Cena po danu:</strong> <span th:text="${rentalEvent.car.price} + 'e'"></span></p>
+            <p><strong>Ukupna cena:</strong> <span th:text="${rentalEvent.totalPrice} + 'e'"></span></p>
+            <p><strong>Izdato od:</strong> <span th:text="${#dates.format(rentalEvent.rentedOn, 'dd-MMM-yyyy')}"></span></p>
+            <p><strong>Izdato do:</strong> <span th:text="${#dates.format(rentalEvent.rentedTo, 'dd-MMM-yyyy')}"></span></p>
+            <a class="btn btn-outline-primary" th:href="@{/cars/viewRental/{id}(id = ${rentalEvent.id})}">Pogledaj >></a>
+        </div>
+        <br>
+        <hr>
+    </div>
+    <a class="btn btn-primary" th:href="@{/cars/addCar}">Dodaj kola</a>
+    <a class="btn btn-primary" th:href="@{/cars/report}">Izvestaj</a>
 </div>
-<a th:href="@{/cars/addCar}">Dodaj kola</a>
-<a th:href="@{/cars/report}">Izvestaj</a>
 </body>
 </html>

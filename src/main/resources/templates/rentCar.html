@@ -2,37 +2,38 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Izdaj vozilo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 </head>
 <body>
-<h2>Dodaj nova kola</h2>
+<div class="container">
+    <h2>Izdaj kola</h2>
 
-<form th:action="@{/cars/rentCar/{id}(id = ${car.id})}" method="post" th:object="${rentalEvent}" accept-charset="UTF-8">
-    <div>
-        <h3>Osnovne Informacije</h3>
+    <form th:action="@{/cars/rentCar/{id}(id = ${car.id})}" method="post" th:object="${rentalEvent}" accept-charset="UTF-8">
         <div>
+            <h3>Osnovne Informacije: </h3>
             <div>
-                <h5>Ime musterije</h5>
-                <input th:field="*{customer.name}" placeholder="Ime musterije..." type="text" value=""/>
-            </div>
-            <div>
-                <h5>Broj vozacke dozvole musterije:</h5>
-                <input th:field="*{customer.licenceNo}" placeholder="Br. dozvole..." type="text" value=""/>
-            </div>
-
-            <div>
-                <h5>Broj dana na izdavanje:</h5>
                 <div>
-                    <input th:field="*{lengthOfRent}" type="text" placeholder="0" data-unit="e">
+                    <h5>Ime musterije</h5>
+                    <input class="form-control" th:field="*{customer.name}" placeholder="Ime musterije..." type="text" value=""/>
+                </div>
+                <div>
+                    <h5>Broj vozacke dozvole musterije:</h5>
+                    <input class="form-control" th:field="*{customer.licenceNo}" placeholder="Br. dozvole..." type="text" value=""/>
+                </div>
+
+                <div>
+                    <h5>Broj dana na izdavanje:</h5>
+                    <div>
+                        <input class="form-control" th:field="*{lengthOfRent}" type="text" placeholder="0" data-unit="e">
+                    </div>
                 </div>
             </div>
-
+            <br>
+            <input class="btn btn-primary" type="submit" value="Izdaj kola">
         </div>
-    </div>
-
-    <div class="row">
-        <input type="submit" value="Izdaj kola">
-    </div>
-</form>
+    </form>
+</div>
 </body>
 </html>

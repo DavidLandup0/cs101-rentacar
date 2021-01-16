@@ -1,31 +1,38 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Razduzi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+            crossorigin="anonymous"></script>
 </head>
 <body>
-<h2>Razduzi vozilo</h2>
+<div class="container">
+    <h2>Razduzi vozilo</h2>
 
-<form th:action="@{/cars/endRental/{id}(id = ${rentalEvent.id})}" method="post" th:object="${rentalEvent}" accept-charset="UTF-8">
-    <div>
-        <h3>Razduzi kola</h3>
+    <form th:action="@{/cars/endRental/{id}(id = ${rentalEvent.id})}" method="post" th:object="${rentalEvent}"
+          accept-charset="UTF-8">
         <div>
+            <h3>Razduzi kola</h3>
             <div>
-                <h5>Molimo potvrdite razduzenje:</h5>
                 <div>
-                    <select th:field="*{active}" name="cars" id="cars">
-                        <option th:value="true" disabled>-</option>
-                        <option th:value="false">Razduzen</option>
-                    </select>
+                    <h5>Molimo potvrdite razduzenje:</h5>
+                    <div>
+                        <select class="form-control" th:field="*{active}" name="cars" id="cars">
+                            <option th:value="true" disabled>-</option>
+                            <option th:value="false">Razduzen</option>
+                        </select>
+                    </div>
                 </div>
             </div>
+            <br>
+            <input class="btn btn-primary" type="submit" value="Razduzi">
         </div>
-    </div>
-
-    <div class="row">
-        <input type="submit" value="Razduzi">
-    </div>
-</form>
+    </form>
+</div>
 </body>
 </html>

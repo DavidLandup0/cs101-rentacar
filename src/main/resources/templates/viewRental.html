@@ -2,9 +2,15 @@
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Pregled izdavanja</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+            crossorigin="anonymous"></script>
 </head>
 <body>
+<div class="container">
     <h1>Informacije o izdatom vozilu</h1>
     <h2 th:text="${rentalEvent.car.model}"></h2>
     <p><strong>Musterija:</strong> <span th:text="${rentalEvent.customer.name}"></span></p>
@@ -13,9 +19,11 @@
     <p><strong>Izdato do:</strong> <span th:text="${#dates.format(rentalEvent.rentedTo, 'dd-MMM-yyyy')}"></span></p>
     <p><strong>Vozilo slobodno za: </strong><span th:text="${freeAfter}"></span> dana</p>
 
-    <p th:if="${extraCharge} != null">Vozilo je prekoracilo datum vracanja. Za dodatnu naplatu: <span th:text="${extraCharge}"></span></p>
+    <p th:if="${extraCharge} != null">Vozilo je prekoracilo datum vracanja. Za dodatnu naplatu: <span
+            th:text="${extraCharge}"></span></p>
 
-    <a th:href="@{/cars/inventory}">Inventar</a>
-    <a th:href="@{/cars/endRental/{id}(id = ${rentalEvent.id})}">Razduzi vozilo</a>
+    <a class="btn btn-primary" th:href="@{/cars/inventory}">Nazad</a>
+    <a class="btn btn-danger" th:href="@{/cars/endRental/{id}(id = ${rentalEvent.id})}">Razduzi vozilo</a>
+</div>
 </body>
 </html>

@@ -3,48 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 </head>
 <body>
-<h2>Dodaj nova kola</h2>
+<div class="container">
 
-<form th:action="@{/cars/addCar/}" method="post" th:object="${car}" accept-charset="UTF-8">
-    <div>
-        <h3>Osnovne Informacije</h3>
+    <h2>Dodaj nova kola</h2>
+
+    <form th:action="@{/cars/addCar/}" method="post" th:object="${car}" accept-charset="UTF-8">
         <div>
+            <h3>Osnovne Informacije</h3>
             <div>
-                <h5>Model kola</h5>
-                <input th:field="*{model}" placeholder="Ime modela..." type="text" value=""/>
-            </div>
-
-            <div>
-                <h5>Boja Kola</h5>
-                <select th:field="*{car_color}">
-                    <option th:value="WHITE">Bela</option>
-                    <option th:value="BLACK">Crna</option>
-                    <option th:value="RED">Crvena</option>
-                </select>
-            </div>
-
-
-            <div>
-                <h5>Cena po danu</h5>
                 <div>
-                    <input th:field="*{price}" type="text" placeholder="0" data-unit="e">
+                    <h5>Model kola</h5>
+                    <input class="form-control" th:field="*{model}" placeholder="Ime modela..." type="text" value=""/>
+                </div>
+
+                <div>
+                    <h5>Boja Kola</h5>
+                    <select th:field="*{car_color}" class="form-control">
+                        <option th:value="WHITE">Bela</option>
+                        <option th:value="BLACK">Crna</option>
+                        <option th:value="RED">Crvena</option>
+                    </select>
+                </div>
+
+
+                <div>
+                    <h5>Cena po danu</h5>
+                    <div>
+                        <input th:field="*{price}" type="text" placeholder="0" data-unit="e" class="form-control">
+                    </div>
+                </div>
+
+                <div>
+                    <h5>Starost automobila</h5>
+                    <div>
+                        <input th:field="*{age}" type="text" placeholder="0" data-unit="godina" class="form-control">
+                    </div>
                 </div>
             </div>
-
-            <div>
-                <h5>Starost automobila</h5>
-                <div>
-                    <input th:field="*{age}" type="text" placeholder="0" data-unit="godina">
-                </div>
-            </div>
+            <br>
+            <input class="btn btn-primary" type="submit" value="Postavi Oglas">
         </div>
-    </div>
-
-    <div class="row">
-        <input type="submit" value="Postavi Oglas">
-    </div>
-</form>
+    </form>
+</div>
 </body>
 </html>

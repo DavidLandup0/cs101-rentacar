@@ -2,12 +2,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Pregled vozila</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 </head>
 <body>
-<h1 th:text="${car.model}"></h1>
-<h2 th:text="'Cena: ' + ${car.price} + 'e po danu'"></h2>
-<h2 th:text="${'Boja automobila: ' + car.car_color.label}"></h2>
-<a th:href="@{/cars/inventory}">Inventar</a>
+<div class="container">
+    <h1>Uspesno ste dodali vozilo!</h1>
+    <h2 th:text="${car.model}"></h2>
+    <h2 th:text="'Cena: ' + ${car.price} + 'e po danu'"></h2>
+    <h2 th:text="${'Boja automobila: ' + car.car_color.label}"></h2>
+    <a class="btn btn-primary" th:href="@{/cars/inventory}">Inventar</a>
+</div>
+
 </body>
 </html>
