@@ -203,7 +203,7 @@ public class CarController {
             startDate = Instant.now().minus(30, DAYS).atZone(ZoneId.of("Europe/London")).toLocalDate();
         }
         if(endDate == null) {
-            endDate = Instant.now().atZone(ZoneId.of("Europe/London")).toLocalDate();
+            endDate = Instant.now().plus(1, DAYS).atZone(ZoneId.of("Europe/London")).toLocalDate();
         }
         List<RentalEvent> rentalEventList = rentalEventService.findByReturnDateBetween(startDate, endDate);
 
