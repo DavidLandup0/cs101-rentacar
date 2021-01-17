@@ -44,7 +44,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/cars/**").authenticated()
-                .antMatchers("/panel/**").authenticated()
                 .antMatchers("/css/").permitAll()
                 .antMatchers("/js/").permitAll()
                 .and()

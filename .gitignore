@@ -19,6 +19,9 @@ target/
 *.iml
 *.ipr
 
+### PlantUML ###
+*.plantuml
+
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
