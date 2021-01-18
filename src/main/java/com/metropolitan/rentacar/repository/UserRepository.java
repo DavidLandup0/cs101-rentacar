@@ -10,5 +10,11 @@ import java.util.Optional;
  */
 @Repository
 public interface UserRepository extends MongoRepository<User, String> {
+    /**
+     * Find one by email, ignore case, returns Optional<User>.
+     *
+     * @param email the email
+     * @return the optional
+     */
     Optional<User> findOneByEmailIgnoreCase(String email);
 }

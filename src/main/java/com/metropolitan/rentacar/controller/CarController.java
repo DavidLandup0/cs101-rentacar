@@ -44,6 +44,12 @@ public class CarController {
     private CustomerService customerService;
 
 
+    /**
+     * Inventory page.
+     * Add list of available cars and active rentals to the model.
+     * @param model the model to be passed to the page
+     * @return the page
+     */
     @GetMapping("/inventory")
     public String inventory(Model model) {
         List<Car> availableCarList = carService.findByAvailableTrue();
@@ -53,6 +59,13 @@ public class CarController {
         return "inventory";
     }
 
+    /**
+     * View car page.
+     * Check if the car is present, and if it is, populate the viewCar page with info
+     * @param id    the id
+     * @param model the model to be passed to the page
+     * @return the page
+     */
     @GetMapping("/viewCar/{id}")
     public String viewCar(@PathVariable("id") String id, Model model) {
         Optional<Car> car = carService.findOne(id);
@@ -64,12 +77,24 @@ public class CarController {
         return "viewCar";
     }
 
+    /**
+     * Add car page.
+     * Plain page to collect form data about adding cars
+     * @param model the model to be passed to the page
+     * @return the page
+     */
     @GetMapping("/addCar")
     public String addCar(Model model) {
         model.addAttribute("car", new Car());
         return "addCar";
     }
 
+    /**
+     * Add listing post page.
+     * Post page that accepts a model attribute containing form data and saves the car to the db
+     * @param car the car
+     * @return the page
+     */
     @PostMapping("/addCar")
     public String addListingPost(@ModelAttribute Car car) {
         car.setAvailable(true);
@@ -77,6 +102,13 @@ public class CarController {
         return "redirect:/cars/viewCar/" + car.getId();
     }
 
+    /**
+     * Rent car page.
+     *
+     * @param id    the id
+     * @param model the model
+     * @return the page
+     */
     @GetMapping("/rentCar/{id}")
     public String rentCar(@PathVariable("id") String id, Model model) {
         Optional<Car> car = carService.findOne(id);
@@ -89,6 +121,13 @@ public class CarController {
         return "rentCar";
     }
 
+    /**
+     * Rent car post page.
+     *
+     * @param id          the id
+     * @param rentalEvent the rental event
+     * @return the page
+     */
     @PostMapping("/rentCar/{id}")
     public String rentCarPost(@PathVariable("id") String id, @ModelAttribute RentalEvent rentalEvent) {
         rentalEvent.setId(null);
@@ -109,6 +148,13 @@ public class CarController {
         return "redirect:/cars/inventory";
     }
 
+    /**
+     * View rental page.
+     * Checking if the RentalEvent exists, and if so, add the RentalEvent to the model to be passed to the page
+     * @param id    the id
+     * @param model the model
+     * @return the page
+     */
     @GetMapping("/viewRental/{id}")
     public String viewRental(@PathVariable("id") String id, Model model) {
         Optional<RentalEvent> rentalEventOptional = rentalEventService.findOne(id);
@@ -122,6 +168,12 @@ public class CarController {
         return "viewRental";
     }
 
+    /**
+     * End rental page.
+     * @param id    the id of the RentalEvent
+     * @param model the model
+     * @return the page
+     */
     @GetMapping("/endRental/{id}")
     public String endRental(@PathVariable("id") String id, Model model) {
         Optional<RentalEvent> rentalEventOptional = rentalEventService.findOne(id);
@@ -136,6 +188,13 @@ public class CarController {
         return "endRental";
     }
 
+    /**
+     * End rental post page.
+     * End RentalEvent by setting it to inactive, but keepint it in the db
+     * Adding extra charge if need be
+     * @param id the id of the RentalEvent
+     * @return the inventory page
+     */
     @PostMapping("/endRental/{id}")
     public String endRentalPost(@PathVariable("id") String id) {
         Optional<RentalEvent> rentalEventOptional = rentalEventService.findOne(id);
@@ -158,6 +217,13 @@ public class CarController {
         return "redirect:/cars/inventory";
     }
 
+    /**
+     * Edit car page.
+     *
+     * @param id    the id
+     * @param model the model
+     * @return the page
+     */
     @GetMapping("/editCar/{id}")
     public String editCar(@PathVariable("id") String id, Model model) {
         Optional<Car> car = carService.findOne(id);
@@ -168,6 +234,13 @@ public class CarController {
         return "editCar";
     }
 
+    /**
+     * Edit car post page.
+     * Post page to edit car and save change in the db
+     * @param id     the id
+     * @param newCar the new car
+     * @return the page
+     */
     @PostMapping("/editCar/{id}")
     public String editCarPost(@PathVariable("id") String id, @ModelAttribute Car newCar) {
         Optional<Car> carOptional = carService.findOne(id);
@@ -181,6 +254,12 @@ public class CarController {
         return "redirect:/cars/inventory";
     }
 
+    /**
+     * Delete car page.
+     *
+     * @param id the id
+     * @return the page
+     */
     @GetMapping("/deleteCar/{id}")
     public String deleteCar(@PathVariable("id") String id) {
         Optional<Car> car = carService.findOne(id);
@@ -191,6 +270,15 @@ public class CarController {
         return "redirect:/cars/inventory";
     }
 
+    /**
+     * Report page.
+     * Setup base values for the page, if not supplied via request parameters
+     * Return list of RentalEvent(s) between the given dates
+     * @param startDate the start date
+     * @param endDate   the end date
+     * @param model     the model
+     * @return the report page
+     */
     @GetMapping("/report")
     public String report( @RequestParam(value = "startDate", required = false) @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate startDate,
                           @RequestParam(value = "endDate", required =  false) @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate endDate,
@@ -208,6 +296,12 @@ public class CarController {
     }
 
 
+    /**
+     * Export csv file of the report.
+     *
+     * @param response the response
+     * @throws IOException the io exception
+     */
     @GetMapping("/export-csv")
     public void exportCSV(HttpServletResponse response) throws IOException {
         final String filename = "izvestaj.csv";
@@ -222,6 +316,4 @@ public class CarController {
             writer.write(re.getCar().getModel() + "," + re.getRentedOn() + "," + re.getRentedTo() + "," + re.getReturnDate() + "," + re.getCustomer().getName() + "," + re.getCharged() + "\n");
         }
     }
-
-
 }
