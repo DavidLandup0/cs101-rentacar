@@ -7,6 +7,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * The type Authority.
+ */
 @Document(collection = "authority")
 public class Authority implements Serializable {
 

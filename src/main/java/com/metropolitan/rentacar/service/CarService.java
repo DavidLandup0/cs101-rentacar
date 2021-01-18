@@ -32,6 +32,11 @@ public interface CarService {
      */
     List<Car> findByAvailableTrue();
 
+    /**
+     * Find by available false list.
+     *
+     * @return the list
+     */
     List<Car> findByAvailableFalse();
 
     /**

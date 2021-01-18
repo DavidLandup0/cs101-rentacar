@@ -10,12 +10,20 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The type Car service.
+ */
 @Service
 public class CarServiceImpl implements CarService {
 
     private final Logger log = LoggerFactory.getLogger(CarServiceImpl.class);
     private final CarRepository carRepository;
 
+    /**
+     * Instantiates a new Car service.
+     *
+     * @param carRepository the car repository
+     */
     public CarServiceImpl(CarRepository carRepository) {
         this.carRepository = carRepository;
     }
